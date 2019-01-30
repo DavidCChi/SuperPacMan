@@ -1,3 +1,5 @@
+package block;
+
 import java.awt.Rectangle;
 import java.awt.Color;
 
