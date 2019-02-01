@@ -10,7 +10,7 @@ public class Game {
 
     /* instance fields */
     private JFrame frame;
-    private JPanel screen;
+    private Screen screen;
 
 
     public static void main(String[] args) {
@@ -45,6 +45,6 @@ public class Game {
      * Moves this Game to the next state.
      */
     public void tick() {
-        screen.repaint();
+        screen.tick();
     }
 }

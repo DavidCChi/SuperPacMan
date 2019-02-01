@@ -1,10 +1,10 @@
 import block.*;
+import entity.*;
 import entity.player.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -12,11 +12,13 @@ public class Screen extends JPanel {
 
     public static final int DIM = 20;
 
-    private Block[][] grid = new Block[25][25];
-    private Player player = new DefaultPlayer(50, 50, DIM, DIM, Color.YELLOW, 3, true);
+    private Block[][] grid;
+    private Player player;
 
     public Screen() {
         super();
+        grid = new Block[25][25];
+        player = new DefaultPlayer(50, 50, DIM, DIM, Color.YELLOW, 3, true);
         setFocusable(true);
         addKeyListener(new KeyListen());
         init();
@@ -35,6 +37,58 @@ public class Screen extends JPanel {
                 }
             }
         }
+        updateSurroundingBlocks(player);
+    }
+
+    public void tick() {
+        update();
+        repaint();
+    }
+
+    public void update() {
+        int direction = player.getDirection();
+        Block block = player.getSurroundBlocks(direction);
+        if (block.getIsSolid()) {
+            if (player.willIntersect(block)) {
+                if (direction % 2 == 0) {
+                    player.setYVel(0);
+                } else {
+                    player.setXVel(0);
+                }
+            }
+        }
+        System.out.print(player.getX() + " " + player.getY() + " ");
+        System.out.println(player.getDirection());
+        player.updatePosition();
+        updateSurroundingBlocks(player);
+    }
+
+    public void updateSurroundingBlocks(Entity entity) {
+        int x = (int)entity.getX();
+        int y = (int)entity.getY();
+
+        int blockX;
+        int blockY;
+
+        // update top block
+        blockX = x / 20;
+        blockY = (((int)y / 20) - 1);
+        entity.setSurroundBlocks(0, grid[blockY < 0 ? 0 : blockY][blockX < 0 ? 0 : blockX]);
+
+        // update left block
+        blockX = (((int)x / 20) - 1);
+        blockY = y / 20;
+        entity.setSurroundBlocks(1, grid[blockY < 0 ? 0 : blockY][blockX < 0 ? 0 : blockX]);
+
+        // update bottom block
+        blockX = x / 20;
+        blockY = (((int)y / 20) + 1);
+        entity.setSurroundBlocks(2, grid[blockY < 0 ? 0 : blockY][blockX < 0 ? 0 : blockX]);
+
+        // update right block
+        blockX = (((int)x / 20) + 1);
+        blockY = y / 20;
+        entity.setSurroundBlocks(3, grid[blockY < 0 ? 0 : blockY][blockX < 0 ? 0 : blockX]);
     }
 
     /**
@@ -49,7 +103,6 @@ public class Screen extends JPanel {
                 g2d.fill(grid[y][x]);
             }
         }
-        player.updatePosition();
         g2d.setColor(player.getColour());
         g2d.fill(player);
     }

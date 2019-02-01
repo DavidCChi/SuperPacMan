@@ -11,6 +11,6 @@ public class Wall extends Block {
     }
 
     public Wall(int x, int y, int width, int height) {
-        super(x, y, width,  height, colour);
+        super(x, y, width,  height, colour, true);
     }
 }

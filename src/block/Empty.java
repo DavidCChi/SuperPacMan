@@ -13,7 +13,7 @@ public class Empty extends Block {
     }
 
     public Empty(int x, int y, int width, int height) {
-        super(x, y, width,  height, colour);
+        super(x, y, width,  height, colour, false);
     }
 
 }
