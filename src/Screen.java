@@ -2,6 +2,8 @@ import block.*;
 import entity.*;
 import entity.player.*;
 
+import java.lang.Math;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -18,7 +20,7 @@ public class Screen extends JPanel {
     public Screen() {
         super();
         grid = new Block[25][25];
-        player = new DefaultPlayer(50, 50, DIM, DIM, Color.YELLOW, 3, true);
+        player = new DefaultPlayer(20, 20, DIM, DIM, Color.YELLOW, 3, true);
         setFocusable(true);
         addKeyListener(new KeyListen());
         init();
@@ -31,6 +33,8 @@ public class Screen extends JPanel {
         for (int y = 0; y < 25; ++y) {
             for (int x = 0; x < 25; ++x) {
                 if (x == 0 || x == 24 || y == 0 || y == 24) {
+                    grid[y][x] = new Wall(x * DIM, y * DIM, DIM, DIM);
+                } else if ((x % 2 == 0) && (y % 2 == 0)) {
                     grid[y][x] = new Wall(x * DIM, y * DIM, DIM, DIM);
                 } else {
                     grid[y][x] = new Empty(x * DIM, y * DIM, DIM, DIM);
@@ -46,15 +50,20 @@ public class Screen extends JPanel {
     }
 
     public void update() {
-        int direction = player.getDirection();
+        if (player.getNextDirection() == Entity.STOP) return;
+        // check block in player's direction
+        int direction = player.getNextDirection();
         Block block = player.getSurroundBlocks(direction);
         if (block.getIsSolid()) {
-            if (player.willIntersect(block)) {
-                if (direction % 2 == 0) {
-                    player.setYVel(0);
-                } else {
-                    player.setXVel(0);
-                }
+            if (((player.getX() % DIM) == 0) && ((player.getY() % DIM) == 0)) {
+                player.setNextDirection(Entity.STOP);
+            }
+        } else {
+            // check if player can move in next direction
+            if (player.getNextDirection() % 2 == player.getDirection() % 2) {
+                player.setDirection(player.getNextDirection());
+            } else if (((player.getX() % DIM) == 0) && ((player.getY() % DIM) == 0)) {
+                player.setDirection(player.getNextDirection());
             }
         }
         System.out.print(player.getX() + " " + player.getY() + " ");
@@ -64,30 +73,30 @@ public class Screen extends JPanel {
     }
 
     public void updateSurroundingBlocks(Entity entity) {
-        int x = (int)entity.getX();
-        int y = (int)entity.getY();
+        float x = (float)entity.getX();
+        float y = (float)entity.getY();
 
         int blockX;
         int blockY;
 
         // update top block
-        blockX = x / 20;
-        blockY = (((int)y / 20) - 1);
+        blockX = Math.round(x / DIM);
+        blockY = ((Math.round(y / DIM)) - 1);
         entity.setSurroundBlocks(0, grid[blockY < 0 ? 0 : blockY][blockX < 0 ? 0 : blockX]);
 
         // update left block
-        blockX = (((int)x / 20) - 1);
-        blockY = y / 20;
+        blockX = ((Math.round(x / DIM)) - 1);
+        blockY = Math.round(y / DIM);
         entity.setSurroundBlocks(1, grid[blockY < 0 ? 0 : blockY][blockX < 0 ? 0 : blockX]);
 
         // update bottom block
-        blockX = x / 20;
-        blockY = (((int)y / 20) + 1);
+        blockX = Math.round(x / DIM);
+        blockY = ((Math.round(y / DIM)) + 1);
         entity.setSurroundBlocks(2, grid[blockY < 0 ? 0 : blockY][blockX < 0 ? 0 : blockX]);
 
         // update right block
-        blockX = (((int)x / 20) + 1);
-        blockY = y / 20;
+        blockX = ((Math.round(x / DIM)) + 1);
+        blockY = Math.round(y / DIM);
         entity.setSurroundBlocks(3, grid[blockY < 0 ? 0 : blockY][blockX < 0 ? 0 : blockX]);
     }
 
@@ -110,13 +119,13 @@ public class Screen extends JPanel {
     private class KeyListen implements KeyListener {
         public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_UP) {
-                player.moveUp();
+                player.setNextDirection(Entity.UP);
             } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                player.moveLeft();
+                player.setNextDirection(Entity.LEFT);
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                player.moveDown();
+                player.setNextDirection(Entity.DOWN);
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                player.moveRight();
+                player.setNextDirection(Entity.RIGHT);
             }
         }
 
