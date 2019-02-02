@@ -50,6 +50,7 @@ public class Screen extends JPanel {
     }
 
     public void update() {
+        /* old
         if (player.getNextDirection() == Entity.STOP) return;
         // check block in player's direction
         int direction = player.getNextDirection();
@@ -70,6 +71,26 @@ public class Screen extends JPanel {
         System.out.println(player.getDirection());
         player.updatePosition();
         updateSurroundingBlocks(player);
+        */
+        if (player.getNextDirection() == Entity.STOP) return;
+        if (((player.getX() % DIM) == 0) && ((player.getY() % DIM) == 0)) {
+            // check if next move is valid when the player is at an intersection
+            updateSurroundingBlocks(player);
+            int direction = player.getNextDirection();
+            Block block = player.getSurroundBlocks(direction);
+            if (block.getIsSolid()) {
+                player.setNextDirection(Entity.STOP);
+            } else {
+                player.setDirection(player.getNextDirection());
+            }
+        } else {
+            if (player.getNextDirection() % 2 == player.getDirection() % 2) {
+                player.setDirection(player.getNextDirection());
+            }
+        }
+        System.out.print(player.getX() + " " + player.getY() + " ");
+        System.out.println(player.getDirection());
+        player.updatePosition();
     }
 
     public void updateSurroundingBlocks(Entity entity) {
