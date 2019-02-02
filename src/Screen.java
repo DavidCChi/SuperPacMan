@@ -30,6 +30,7 @@ public class Screen extends JPanel {
     public void init() {
         for (int y = 0; y < 25; ++y) {
             for (int x = 0; x < 25; ++x) {
+                /*
                 if (x == 0 || x == 24 || y == 0 || y == 24) {
                     grid[y][x] = new Wall(x * DIM, y * DIM, DIM, DIM);
                 } else if ((x % 2 == 0) && (y % 2 == 0)) {
@@ -37,8 +38,17 @@ public class Screen extends JPanel {
                 } else {
                     grid[y][x] = new Empty(x * DIM, y * DIM, DIM, DIM);
                 }
+                */
+                if (x == 0 || x == 24 || y == 0 || y == 24) {
+                    grid[y][x] = new Wall(x * DIM, y * DIM, DIM, DIM);
+                } else {
+                    grid[y][x] = new Empty(x * DIM, y * DIM, DIM, DIM);
+                }
             }
         }
+        grid[10][10] = new Wall(200, 200, DIM, DIM);
+        grid[11][10] = new Wall(200, 220, DIM, DIM);
+        grid[12][10] = new Wall(200, 240, DIM, DIM);
         updateSurroundingBlocks(player);
     }
 
