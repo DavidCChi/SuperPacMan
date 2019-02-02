@@ -2,8 +2,6 @@ import block.*;
 import entity.*;
 import entity.player.*;
 
-import java.lang.Math;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -94,30 +92,30 @@ public class Screen extends JPanel {
     }
 
     public void updateSurroundingBlocks(Entity entity) {
-        float x = (float)entity.getX();
-        float y = (float)entity.getY();
+        int x = (int)entity.getX();
+        int y = (int)entity.getY();
 
         int blockX;
         int blockY;
 
         // update top block
-        blockX = Math.round(x / DIM);
-        blockY = ((Math.round(y / DIM)) - 1);
+        blockX = x / DIM;
+        blockY = ((y / DIM) - 1);
         entity.setSurroundBlocks(0, grid[blockY < 0 ? 0 : blockY][blockX < 0 ? 0 : blockX]);
 
         // update left block
-        blockX = ((Math.round(x / DIM)) - 1);
-        blockY = Math.round(y / DIM);
+        blockX = ((x / DIM) - 1);
+        blockY = y / DIM;
         entity.setSurroundBlocks(1, grid[blockY < 0 ? 0 : blockY][blockX < 0 ? 0 : blockX]);
 
         // update bottom block
-        blockX = Math.round(x / DIM);
-        blockY = ((Math.round(y / DIM)) + 1);
+        blockX = x / DIM;
+        blockY = ((y / DIM) + 1);
         entity.setSurroundBlocks(2, grid[blockY < 0 ? 0 : blockY][blockX < 0 ? 0 : blockX]);
 
         // update right block
-        blockX = ((Math.round(x / DIM)) + 1);
-        blockY = Math.round(y / DIM);
+        blockX = ((x / DIM) + 1);
+        blockY = y / DIM;
         entity.setSurroundBlocks(3, grid[blockY < 0 ? 0 : blockY][blockX < 0 ? 0 : blockX]);
     }
 
