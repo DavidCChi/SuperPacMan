@@ -1,6 +1,6 @@
 package block;
 
-import block.Block;
+import entity.player.DefaultPlayer;
 
 import java.awt.*;
 
@@ -16,4 +16,7 @@ public class Empty extends Block {
         super(x, y, width,  height, colour, false);
     }
 
+    public void collide(DefaultPlayer player) {
+        player.setDirection(player.getNextDirection());
+    }
 }

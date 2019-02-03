@@ -4,7 +4,11 @@ import block.Block;
 
 import java.awt.*;
 
-public abstract class Entity extends Rectangle {
+interface BlockVisitable {
+    void collide(Block block);
+}
+
+public abstract class Entity extends Rectangle implements BlockVisitable {
 
     public static final int UP = 0;
     public static final int LEFT = 1;
@@ -143,11 +147,5 @@ public abstract class Entity extends Rectangle {
     public void moveRight() {
         xVel = 1;
         yVel = 0;
-    }
-
-    public boolean willIntersect(Rectangle rec) {
-        // gets next position
-        Rectangle next = new Rectangle((int)getX() + getXVel(), (int)getY() + getYVel(), (int)getWidth(), (int)getHeight());
-        return next.intersects(rec);
     }
 }

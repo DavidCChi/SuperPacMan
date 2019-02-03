@@ -1,5 +1,8 @@
 package block;
 
+import entity.Entity;
+import entity.player.DefaultPlayer;
+
 import java.awt.Color;
 
 public class Wall extends Block {
@@ -12,5 +15,9 @@ public class Wall extends Block {
 
     public Wall(int x, int y, int width, int height) {
         super(x, y, width,  height, colour, true);
+    }
+
+    public void collide(DefaultPlayer player) {
+        player.setNextDirection(Entity.STOP);
     }
 }

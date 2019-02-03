@@ -28,17 +28,10 @@ public class Game {
         frame.setSize(WIDTH, HEIGHT);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setVisible(true);
         screen = new Screen();
         screen.requestFocus();
-        init();
-    }
-
-    /**
-     * Initializes the Game with a Screen.
-     */
-    public void init() {
         frame.add(screen);
+        frame.setVisible(true);
     }
 
     /**

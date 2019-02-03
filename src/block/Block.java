@@ -1,9 +1,15 @@
 package block;
 
+import entity.player.DefaultPlayer;
+
 import java.awt.Rectangle;
 import java.awt.Color;
 
-public abstract class Block extends Rectangle {
+interface EntityVisitor {
+    void collide(DefaultPlayer player);
+}
+
+public abstract class Block extends Rectangle implements EntityVisitor {
     private Color colour;
     private boolean isSolid;
 
@@ -18,10 +24,7 @@ public abstract class Block extends Rectangle {
         this.isSolid = isSolid;
     }
 
-    /**
-     * Gets the colour of this Block.
-     * @return the colour of this block
-     */
+    /* accessors */
     public Color getColour() {
         return colour;
     }
@@ -30,6 +33,7 @@ public abstract class Block extends Rectangle {
         return isSolid;
     }
 
+    /* mutators */
     public void setColour(Color colour) {
         this.colour = colour;
     }
