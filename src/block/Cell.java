@@ -17,8 +17,10 @@ public class Cell extends Block {
     }
 
     public void collide(DefaultPlayer player) {
-        setIsEaten(true);
-        player.incrementScore(1);
+        if (!isEaten) {
+            setIsEaten(true);
+            player.incrementScore(1);
+        }
         player.setDirection(player.getNextDirection());
     }
 
