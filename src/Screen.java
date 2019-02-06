@@ -18,7 +18,7 @@ public class Screen extends JPanel {
     public Screen() {
         super();
         grid = new Block[25][25];
-        player = new DefaultPlayer(20, 20, DIM, DIM, Color.YELLOW, 3, true);
+        player = new DefaultPlayer(20, 20, DIM, DIM, Color.YELLOW, 0, 3, true);
         setFocusable(true);
         addKeyListener(new KeyListen());
         init();
@@ -42,7 +42,7 @@ public class Screen extends JPanel {
                 if (x == 0 || x == 24 || y == 0 || y == 24) {
                     grid[y][x] = new Wall(x * DIM, y * DIM, DIM, DIM);
                 } else {
-                    grid[y][x] = new Empty(x * DIM, y * DIM, DIM, DIM);
+                    grid[y][x] = new Cell(x * DIM, y * DIM, DIM, DIM, false);
                 }
             }
         }
@@ -70,8 +70,7 @@ public class Screen extends JPanel {
                 player.setDirection(player.getNextDirection());
             }
         }
-        System.out.print(player.getX() + " " + player.getY() + " ");
-        System.out.println(player.getDirection());
+        System.out.println(player.getX() + " " + player.getY() + " " + player.getDirection() + " " + player.getScore());
         player.updatePosition();
     }
 
