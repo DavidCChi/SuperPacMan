@@ -28,7 +28,7 @@ public abstract class Player extends Entity {
         return score;
     }
 
-    public int lifeCount() {
+    public int getLifeCount() {
         return lifeCount;
     }
 

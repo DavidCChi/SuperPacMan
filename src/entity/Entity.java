@@ -4,10 +4,6 @@ import block.Block;
 
 import java.awt.*;
 
-interface BlockVisitable {
-    void collide(Block block);
-}
-
 public abstract class Entity extends Rectangle implements BlockVisitable {
 
     public static final int UP = 0;

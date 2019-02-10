@@ -13,13 +13,15 @@ public class Screen extends JPanel {
     public static final int DIM = 20;
 
     private Block[][] grid;
-    private Player player;
+    private PlayerWrapper playerWrapper;
 
     public Screen() {
         super();
         grid = new Block[25][25];
-        player = new DefaultPlayer(20, 20, DIM, DIM, Color.YELLOW, 0, 3, true);
+        playerWrapper = new PlayerWrapper(new DefaultPlayer(20, 20, DIM, DIM, Color.YELLOW, 0, 3, true));
         setFocusable(true);
+        setBackground(Color.BLACK);
+        setOpaque(true);
         addKeyListener(new KeyListen());
         init();
     }
@@ -42,14 +44,14 @@ public class Screen extends JPanel {
                 if (x == 0 || x == 24 || y == 0 || y == 24) {
                     grid[y][x] = new Wall(x * DIM, y * DIM, DIM, DIM);
                 } else {
-                    grid[y][x] = new Cell(x * DIM, y * DIM, DIM, DIM, false);
+                    grid[y][x] = new Cell(x * DIM + (DIM / 4), y * DIM + (DIM / 4), DIM / 2, DIM / 2, false);
                 }
             }
         }
         grid[10][10] = new Wall(200, 200, DIM, DIM);
         grid[11][10] = new Wall(200, 220, DIM, DIM);
         grid[12][10] = new Wall(200, 240, DIM, DIM);
-        updateSurroundingBlocks(player);
+        updateSurroundingBlocks(playerWrapper.getPlayer());
     }
 
     public void tick() {
@@ -58,20 +60,20 @@ public class Screen extends JPanel {
     }
 
     public void update() {
-        if (player.getNextDirection() == Entity.STOP) return;
-        if (((player.getX() % DIM) == 0) && ((player.getY() % DIM) == 0)) {
+        if (playerWrapper.getNextDirection() == Entity.STOP) return;
+        if (((playerWrapper.getX() % DIM) == 0) && ((playerWrapper.getY() % DIM) == 0)) {
             // check if next move is valid when the player is at an intersection
-            updateSurroundingBlocks(player);
-            int direction = player.getNextDirection();
-            Block block = player.getSurroundBlocks(direction);
-            player.collide(block);
+            updateSurroundingBlocks(playerWrapper.getPlayer());
+            int direction = playerWrapper.getNextDirection();
+            Block block = playerWrapper.getSurroundBlocks(direction);
+            playerWrapper.collide(block);
         } else {
-            if (player.getNextDirection() % 2 == player.getDirection() % 2) {
-                player.setDirection(player.getNextDirection());
+            if (playerWrapper.getNextDirection() % 2 == playerWrapper.getDirection() % 2) {
+                playerWrapper.setDirection(playerWrapper.getNextDirection());
             }
         }
-        System.out.println(player.getX() + " " + player.getY() + " " + player.getDirection() + " " + player.getScore());
-        player.updatePosition();
+        System.out.println(playerWrapper.getX() + " " + playerWrapper.getY() + " " + playerWrapper.getDirection() + " " + playerWrapper.getScore());
+        playerWrapper.updatePosition();
     }
 
     public void updateSurroundingBlocks(Entity entity) {
@@ -114,20 +116,20 @@ public class Screen extends JPanel {
                 g2d.fill(grid[y][x]);
             }
         }
-        g2d.setColor(player.getColour());
-        g2d.fill(player);
+        g2d.setColor(playerWrapper.getPlayer().getColour());
+        g2d.fill(playerWrapper.getPlayer());
     }
 
     private class KeyListen implements KeyListener {
         public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_UP) {
-                player.setNextDirection(Entity.UP);
+                playerWrapper.setNextDirection(Entity.UP);
             } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                player.setNextDirection(Entity.LEFT);
+                playerWrapper.setNextDirection(Entity.LEFT);
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                player.setNextDirection(Entity.DOWN);
+                playerWrapper.setNextDirection(Entity.DOWN);
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                player.setNextDirection(Entity.RIGHT);
+                playerWrapper.setNextDirection(Entity.RIGHT);
             }
         }
 
