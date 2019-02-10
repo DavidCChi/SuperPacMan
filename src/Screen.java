@@ -51,6 +51,7 @@ public class Screen extends JPanel {
         grid[10][10] = new Wall(200, 200, DIM, DIM);
         grid[11][10] = new Wall(200, 220, DIM, DIM);
         grid[12][10] = new Wall(200, 240, DIM, DIM);
+        grid[5][5] = new SpecialCell(105, 105, 10, 10, false, 0);
         updateSurroundingBlocks(playerWrapper.getPlayer());
     }
 

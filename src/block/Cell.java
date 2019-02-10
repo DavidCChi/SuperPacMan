@@ -10,18 +10,11 @@ public class Cell extends Block {
 
     public Cell() {
         super();
+        isEaten = false;
     }
 
     public Cell(int x, int y, int width, int height, boolean isEaten) {
         super(x, y, width,  height, isEaten ? Color.BLACK : Color.WHITE);
-    }
-
-    public void collide(DefaultPlayer player) {
-        if (!isEaten) {
-            setIsEaten(true);
-            player.incrementScore(1);
-        }
-        player.setDirection(player.getNextDirection());
     }
 
     /* accessors */
@@ -37,5 +30,13 @@ public class Cell extends Block {
         } else {
             setColour(Color.WHITE);
         }
+    }
+
+    public void collide(DefaultPlayer player) {
+        if (!isEaten) {
+            setIsEaten(true);
+            player.incrementScore(1);
+        }
+        player.setDirection(player.getNextDirection());
     }
 }
