@@ -18,7 +18,8 @@ public class Screen extends JPanel {
     public Screen() {
         super();
         grid = new Block[25][25];
-        playerWrapper = new PlayerWrapper(new DefaultPlayer(20, 20, DIM, DIM, Color.YELLOW, 0, 3, true));
+        playerWrapper = new PlayerWrapper();
+        playerWrapper.setPlayer(new DefaultPlayer(playerWrapper, 20, 20, DIM, DIM, Color.YELLOW, 0, 3, true));
         setFocusable(true);
         setBackground(Color.BLACK);
         setOpaque(true);
@@ -44,14 +45,14 @@ public class Screen extends JPanel {
                 if (x == 0 || x == 24 || y == 0 || y == 24) {
                     grid[y][x] = new Wall(x * DIM, y * DIM, DIM, DIM);
                 } else {
-                    grid[y][x] = new Cell(x * DIM + (DIM / 4), y * DIM + (DIM / 4), DIM / 2, DIM / 2, false);
+                    grid[y][x] = new Cell(x * DIM + (DIM / 2), y * DIM + (DIM / 2), DIM / 4, DIM / 4, false);
                 }
             }
         }
         grid[10][10] = new Wall(200, 200, DIM, DIM);
         grid[11][10] = new Wall(200, 220, DIM, DIM);
         grid[12][10] = new Wall(200, 240, DIM, DIM);
-        grid[5][5] = new SpecialCell(105, 105, 10, 10, false, 0);
+        grid[5][5] = new SpecialCell(110, 110, 5, 5, false, 0);
         updateSurroundingBlocks(playerWrapper.getPlayer());
     }
 

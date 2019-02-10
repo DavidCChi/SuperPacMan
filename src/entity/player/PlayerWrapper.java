@@ -8,11 +8,11 @@ public class PlayerWrapper implements BlockVisitable {
     private Player player;
 
     public PlayerWrapper() {
-        player = new DefaultPlayer();
+        player = null;
     }
 
     public PlayerWrapper(int x, int y, int width, int height, Color colour, int score, int lifeCount, boolean isAlive) {
-        player = new DefaultPlayer(x, y, width, height, colour, score, lifeCount, isAlive);
+        player = new DefaultPlayer(this, x, y, width, height, colour, score, lifeCount, isAlive);
     }
 
     public PlayerWrapper(Player player) {

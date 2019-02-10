@@ -25,5 +25,6 @@ public class SpecialCell extends Cell {
             player.incrementScore(999);
         }
         player.setDirection(player.getNextDirection());
+        player.getWrapper().setPlayer(new DefaultPlayer(player));
     }
 }

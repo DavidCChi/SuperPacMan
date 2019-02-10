@@ -9,8 +9,12 @@ public class DefaultPlayer extends Player {
         super();
     }
 
-    public DefaultPlayer(int x, int y, int width, int height, Color colour, int score, int lifeCount, boolean isAlive) {
-        super(x, y, width, height, colour, score, lifeCount, isAlive);
+    public DefaultPlayer(PlayerWrapper wrapper, int x, int y, int width, int height, Color colour, int score, int lifeCount, boolean isAlive) {
+        super(wrapper, x, y, width, height, colour, score, lifeCount, isAlive);
+    }
+
+    public DefaultPlayer(DefaultPlayer player) {
+        super(player);
     }
 
     public void collide(Block block) {
