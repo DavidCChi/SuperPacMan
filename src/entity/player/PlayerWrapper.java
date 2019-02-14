@@ -76,7 +76,7 @@ public class PlayerWrapper implements BlockVisitable {
     /* from Player */
     public int getScore() { return player.getScore(); }
 
-    public int lifeCount() { return player.getLifeCount(); }
+    public int getLifeCount() { return player.getLifeCount(); }
 
     public boolean getIsAlive() { return player.getIsAlive(); }
 

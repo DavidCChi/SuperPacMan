@@ -1,5 +1,6 @@
 package block;
 
+import entity.enemy.DefaultEnemy;
 import entity.player.DefaultPlayer;
 
 import java.awt.*;
@@ -26,5 +27,9 @@ public class SpecialCell extends Cell {
         }
         player.setDirection(player.getNextDirection());
         player.getWrapper().setPlayer(new DefaultPlayer(player));
+    }
+
+    public void collide(DefaultEnemy enemy) {
+        enemy.setDirection(enemy.getNextDirection());
     }
 }

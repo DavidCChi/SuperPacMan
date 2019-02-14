@@ -22,7 +22,7 @@ public abstract class Player extends Entity {
     public Player(PlayerWrapper wrapper, int x, int y, int width, int height, Color colour, int score, int lifeCount, boolean isAlive) {
         super(x, y, width, height, colour);
         this.wrapper = wrapper;
-        this.score = 0;
+        this.score = score;
         this.lifeCount = lifeCount;
         this.isAlive = isAlive;
     }

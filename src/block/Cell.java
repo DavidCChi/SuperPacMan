@@ -1,5 +1,6 @@
 package block;
 
+import entity.enemy.DefaultEnemy;
 import entity.player.DefaultPlayer;
 
 import java.awt.*;
@@ -38,5 +39,9 @@ public class Cell extends Block {
             player.incrementScore(1);
         }
         player.setDirection(player.getNextDirection());
+    }
+
+    public void collide(DefaultEnemy enemy) {
+        enemy.setDirection(enemy.getNextDirection());
     }
 }
