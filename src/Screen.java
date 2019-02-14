@@ -1,5 +1,7 @@
 import block.*;
 import entity.*;
+import entity.enemy.DefaultEnemy;
+import entity.enemy.EnemyWrapper;
 import entity.player.*;
 
 import java.awt.*;
@@ -8,18 +10,25 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
+import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Screen extends JPanel {
 
     public static final int DIM = 20;
 
     private Block[][] grid;
     private PlayerWrapper playerWrapper;
+    private ArrayList<EnemyWrapper> enemyWrappers;
 
     public Screen() {
         super();
         grid = new Block[25][25];
         playerWrapper = new PlayerWrapper();
         playerWrapper.setPlayer(new DefaultPlayer(playerWrapper, 20, 20, DIM, DIM, Color.YELLOW, 0, 3, true));
+        enemyWrappers = new ArrayList<EnemyWrapper>();
+        enemyWrappers.add(new EnemyWrapper());
+        enemyWrappers.get(0).setEnemy(new DefaultEnemy(enemyWrappers.get(0), 60, 60, DIM, DIM, Color.RED, true));
         setFocusable(true);
         setBackground(Color.BLACK);
         setOpaque(true);
@@ -54,6 +63,9 @@ public class Screen extends JPanel {
         grid[12][10] = new Wall(200, 240, DIM, DIM);
         grid[5][5] = new SpecialCell(110, 110, 5, 5, false, 0);
         updateSurroundingBlocks(playerWrapper.getPlayer());
+        for (EnemyWrapper wrapper : enemyWrappers) {
+            updateSurroundingBlocks(wrapper.getEnemy());
+        }
     }
 
     public void tick() {
@@ -62,6 +74,11 @@ public class Screen extends JPanel {
     }
 
     public void update() {
+        updatePlayer();
+        updateEnemies();
+    }
+
+    public void updatePlayer() {
         if (playerWrapper.getNextDirection() == Entity.STOP) return;
         if (((playerWrapper.getX() % DIM) == 0) && ((playerWrapper.getY() % DIM) == 0)) {
             // check if next move is valid when the player is at an intersection
@@ -76,6 +93,20 @@ public class Screen extends JPanel {
         }
         System.out.println(playerWrapper.getX() + " " + playerWrapper.getY() + " " + playerWrapper.getDirection() + " " + playerWrapper.getScore());
         playerWrapper.updatePosition();
+    }
+
+    public void updateEnemies() {
+        for (EnemyWrapper wrapper : enemyWrappers) {
+            if (wrapper.getNextDirection() == Entity.STOP) wrapper.setNextDirection(ThreadLocalRandom.current().nextInt(0, 4));;
+            if (((wrapper.getX() % DIM) == 0) && ((wrapper.getY() % DIM) == 0)) {
+                // check if next move is valid when the player is at an intersection
+                updateSurroundingBlocks(wrapper.getEnemy());
+                int direction = wrapper.getNextDirection();
+                Block block = wrapper.getSurroundBlocks(direction);
+                wrapper.collide(block);
+            }
+            wrapper.updatePosition();
+        }
     }
 
     public void updateSurroundingBlocks(Entity entity) {
@@ -118,8 +149,15 @@ public class Screen extends JPanel {
                 g2d.fill(grid[y][x]);
             }
         }
+        // paints the Player
         g2d.setColor(playerWrapper.getPlayer().getColour());
         g2d.fill(playerWrapper.getPlayer());
+
+        // paints the Enemies
+        for (EnemyWrapper wrapper : enemyWrappers) {
+            g2d.setColor(wrapper.getEnemy().getColour());
+            g2d.fill(wrapper.getEnemy());
+        }
     }
 
     private class KeyListen implements KeyListener {

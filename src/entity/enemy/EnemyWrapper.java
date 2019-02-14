@@ -80,4 +80,6 @@ public class EnemyWrapper {
     public boolean getIsAlive() { return enemy.getIsAlive(); }
 
     public void setIsAlive(boolean isAlive) { enemy.setIsAlive(isAlive); }
+
+    public void collide(Block block) { enemy.collide(block); }
 }
