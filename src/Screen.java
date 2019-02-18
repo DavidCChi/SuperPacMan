@@ -79,20 +79,31 @@ public class Screen extends JPanel {
     }
 
     public void updatePlayer() {
-        if (playerWrapper.getNextDirection() == Entity.STOP) return;
-        if (((playerWrapper.getX() % DIM) == 0) && ((playerWrapper.getY() % DIM) == 0)) {
-            // check if next move is valid when the player is at an intersection
-            updateSurroundingBlocks(playerWrapper.getPlayer());
-            int direction = playerWrapper.getNextDirection();
-            Block block = playerWrapper.getSurroundBlocks(direction);
-            playerWrapper.collide(block);
+        if (playerWrapper.getIsAlive()) {
+            for (EnemyWrapper enemyWrapper : enemyWrappers) {
+                if (playerWrapper.getPlayer().intersects(enemyWrapper.getEnemy())) {
+                    playerWrapper.collide(enemyWrapper.getEnemy());
+                }
+            }
+            if (playerWrapper.getNextDirection() == Entity.STOP) return;
+            if (((playerWrapper.getX() % DIM) == 0) && ((playerWrapper.getY() % DIM) == 0)) {
+                // check if next move is valid when the player is at an intersection
+                updateSurroundingBlocks(playerWrapper.getPlayer());
+                int direction = playerWrapper.getNextDirection();
+                Block block = playerWrapper.getSurroundBlocks(direction);
+                playerWrapper.collide(block);
+            } else {
+                if (playerWrapper.getNextDirection() % 2 == playerWrapper.getDirection() % 2) {
+                    playerWrapper.setDirection(playerWrapper.getNextDirection());
+                }
+            }
+            System.out.println(playerWrapper.getX() + " " + playerWrapper.getY() + " " + playerWrapper.getDirection() + " " + playerWrapper.getScore());
+            playerWrapper.updatePosition();
         } else {
-            if (playerWrapper.getNextDirection() % 2 == playerWrapper.getDirection() % 2) {
-                playerWrapper.setDirection(playerWrapper.getNextDirection());
+            if (!playerWrapper.respawn(20, 20)) {
+                System.out.println("Game Over");
             }
         }
-        System.out.println(playerWrapper.getX() + " " + playerWrapper.getY() + " " + playerWrapper.getDirection() + " " + playerWrapper.getScore());
-        playerWrapper.updatePosition();
     }
 
     public void updateEnemies() {

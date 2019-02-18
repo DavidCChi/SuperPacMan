@@ -1,8 +1,11 @@
 package entity.player;
 
 import entity.Entity;
+import entity.enemy.Enemy;
 
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public abstract class Player extends Entity {
 
@@ -10,6 +13,8 @@ public abstract class Player extends Entity {
     private int score;
     private int lifeCount;
     private boolean isAlive;
+
+    private boolean respawning;
 
     public Player() {
         super();
@@ -71,7 +76,36 @@ public abstract class Player extends Entity {
 
     /* other methods */
 
+    public Color getColour() {
+        if (isAlive) {
+            return super.getColour();
+        } else {
+            return Color.BLACK;
+        }
+    }
+
     public void incrementScore(int increment) {
         score += increment;
     }
+
+    public boolean respawn(int x, int y) {
+        if (respawning) return true;
+        if (lifeCount > 0) {
+            Timer timer = new Timer("Respawn");
+            timer.schedule(new TimerTask() {
+                public void run() {
+                    setLocation(x, y);
+                    setNextDirection(Entity.STOP);
+                    setIsAlive(true);
+                    respawning = false;
+                }
+            }, 3000);
+            respawning = true;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public abstract void collide(Enemy enemy);
 }

@@ -2,6 +2,7 @@ package entity.player;
 
 import block.Block;
 import entity.BlockVisitable;
+import entity.enemy.Enemy;
 import java.awt.*;
 
 public class PlayerWrapper implements BlockVisitable {
@@ -37,6 +38,8 @@ public class PlayerWrapper implements BlockVisitable {
     public int getX() { return (int) player.getX(); }
 
     public int getY() { return (int) player.getY(); }
+
+    public void setLocation(int x, int y) { player.setLocation(x, y); }
 
     /* from Entity */
     public Color getColour() { return player.getColour(); }
@@ -88,6 +91,10 @@ public class PlayerWrapper implements BlockVisitable {
 
     public void incrementScore(int increment) { player.incrementScore(increment); }
 
+    public boolean respawn(int x, int y) { return player.respawn(x, y); }
+
     /* from BlockVisitable */
     public void collide(Block block) { player.collide(block); }
+
+    public void collide(Enemy enemy) { player.collide(enemy); }
 }

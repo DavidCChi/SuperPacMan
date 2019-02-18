@@ -2,6 +2,8 @@ package entity.player;
 
 import block.Block;
 
+import entity.enemy.Enemy;
+
 import java.awt.Color;
 
 public class DefaultPlayer extends Player {
@@ -19,5 +21,10 @@ public class DefaultPlayer extends Player {
 
     public void collide(Block block) {
         block.collide(this);
+    }
+
+    public void collide(Enemy enemy) {
+        setLifeCount(getLifeCount() - 1);
+        setIsAlive(false);
     }
 }

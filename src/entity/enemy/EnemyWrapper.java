@@ -39,6 +39,8 @@ public class EnemyWrapper {
 
     public int getY() { return (int) enemy.getY(); }
 
+    public void setLocation(int x, int y) { enemy.setLocation(x, y); }
+
     /* from Entity */
     public Color getColour() { return enemy.getColour(); }
 
