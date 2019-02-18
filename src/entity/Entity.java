@@ -13,6 +13,7 @@ public abstract class Entity extends Rectangle implements BlockVisitable {
     public static final int STOP = -1;
 
     private Color colour;
+    private Color defaultColour;
     private int xVel;
     private int yVel;
     private int direction;
@@ -28,6 +29,7 @@ public abstract class Entity extends Rectangle implements BlockVisitable {
     public Entity() {
         super();
         colour = Color.YELLOW;
+        defaultColour = colour;
         xVel = 0;
         yVel = 0;
         direction = 0;
@@ -38,6 +40,7 @@ public abstract class Entity extends Rectangle implements BlockVisitable {
     public Entity(int x, int y, int width, int height, Color colour) {
         super(x, y, width, height);
         this.colour = colour;
+        defaultColour = colour;
         xVel = 0;
         yVel = 0;
         direction = 0;
@@ -49,6 +52,10 @@ public abstract class Entity extends Rectangle implements BlockVisitable {
 
     public Color getColour() {
         return colour;
+    }
+
+    public Color getDefaultColour() {
+        return defaultColour;
     }
 
     public int getXVel() {

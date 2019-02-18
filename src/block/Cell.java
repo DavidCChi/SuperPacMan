@@ -24,18 +24,18 @@ public class Cell extends Block {
     }
 
     /* mutators */
-    public void setIsEaten(boolean isEaten) {
+    public void setIsEaten(boolean isEaten, Color colour) {
         this.isEaten = isEaten;
         if (isEaten) {
             setColour(Color.BLACK);
         } else {
-            setColour(Color.WHITE);
+            setColour(colour);
         }
     }
 
     public void collide(DefaultPlayer player) {
         if (!isEaten) {
-            setIsEaten(true);
+            setIsEaten(true, Color.WHITE);
             player.incrementScore(1);
         }
         player.setDirection(player.getNextDirection());

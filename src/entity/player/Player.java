@@ -8,7 +8,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public abstract class Player extends Entity {
-
     private PlayerWrapper wrapper;
     private int score;
     private int lifeCount;
@@ -72,17 +71,14 @@ public abstract class Player extends Entity {
 
     public void setIsAlive(boolean isAlive) {
         this.isAlive = isAlive;
+        if (!isAlive) {
+            setColour(Color.BLACK);
+        } else {
+            setColour(getDefaultColour());
+        }
     }
 
     /* other methods */
-
-    public Color getColour() {
-        if (isAlive) {
-            return super.getColour();
-        } else {
-            return Color.BLACK;
-        }
-    }
 
     public void incrementScore(int increment) {
         score += increment;

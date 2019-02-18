@@ -4,6 +4,8 @@ import entity.enemy.DefaultEnemy;
 import entity.player.DefaultPlayer;
 
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SpecialCell extends Cell {
     private static final Color powerColour[] = {Color.ORANGE};
@@ -22,11 +24,18 @@ public class SpecialCell extends Cell {
 
     public void collide(DefaultPlayer player) {
         if (!getIsEaten()) {
-            setIsEaten(true);
+            setIsEaten(true, powerColour[power]);
             player.incrementScore(999);
         }
         player.setDirection(player.getNextDirection());
         player.getWrapper().setPlayer(new DefaultPlayer(player));
+        Timer timer = new Timer("Respawn");
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                setIsEaten(false, powerColour[power]);
+            }
+        }, 3000);
     }
 
     public void collide(DefaultEnemy enemy) {
