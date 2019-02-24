@@ -12,8 +12,8 @@ public class EnemyWrapper {
         enemy = null;
     }
 
-    public EnemyWrapper(int x, int y, int width, int height, Color colour, boolean isAlive) {
-        enemy = new DefaultEnemy(this, x, y , width, height, colour, isAlive);
+    public EnemyWrapper(int x, int y, int width, int height, Color colour, boolean alive) {
+        enemy = new DefaultEnemy(this, x, y , width, height, colour, alive);
     }
 
     public EnemyWrapper(Enemy enemy) {
@@ -52,6 +52,8 @@ public class EnemyWrapper {
 
     public int getNextDirection() { return enemy.getNextDirection(); }
 
+    public boolean isAlive() { return enemy.isAlive(); }
+
     public Block getSurroundBlocks(int x) { return enemy.getSurroundBlocks(x); }
 
     public void setColour(Color colour) { enemy.setColour(colour); }
@@ -63,6 +65,8 @@ public class EnemyWrapper {
     public void setDirection(int direction) { enemy.setDirection(direction); }
 
     public void setNextDirection(int nextDirection) { enemy.setNextDirection(nextDirection); }
+
+    public void setAlive(boolean alive) { enemy.setAlive(alive); }
 
     public void setSurroundBlocks(int x, Block block) { enemy.setSurroundBlocks(x, block); }
 
@@ -78,10 +82,6 @@ public class EnemyWrapper {
 
     /* from Enemy */
     public EnemyWrapper getWrapper() { return enemy.getWrapper(); }
-
-    public boolean getIsAlive() { return enemy.getIsAlive(); }
-
-    public void setIsAlive(boolean isAlive) { enemy.setIsAlive(isAlive); }
 
     public void collide(Block block) { enemy.collide(block); }
 }

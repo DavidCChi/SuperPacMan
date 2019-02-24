@@ -25,7 +25,7 @@ public class Screen extends JPanel {
         super();
         grid = new Block[25][25];
         playerWrapper = new PlayerWrapper();
-        playerWrapper.setPlayer(new DefaultPlayer(playerWrapper, 20, 20, DIM, DIM, Color.YELLOW, 0, 3, true));
+        playerWrapper.setPlayer(new DefaultPlayer(playerWrapper, 20, 20, DIM, DIM, Color.YELLOW, true, 0, 3));
         enemyWrappers = new ArrayList<EnemyWrapper>();
         enemyWrappers.add(new EnemyWrapper());
         enemyWrappers.get(0).setEnemy(new DefaultEnemy(enemyWrappers.get(0), 60, 60, DIM, DIM, Color.RED, true));
@@ -79,7 +79,7 @@ public class Screen extends JPanel {
     }
 
     public void updatePlayer() {
-        if (playerWrapper.getIsAlive()) {
+        if (playerWrapper.isAlive()) {
             for (EnemyWrapper enemyWrapper : enemyWrappers) {
                 if (playerWrapper.getPlayer().intersects(enemyWrapper.getEnemy())) {
                     playerWrapper.collide(enemyWrapper.getEnemy());

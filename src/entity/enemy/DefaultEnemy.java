@@ -10,8 +10,8 @@ public class DefaultEnemy extends Enemy {
         super();
     }
 
-    public DefaultEnemy(EnemyWrapper wrapper, int x, int y, int width, int height, Color colour, boolean isAlive) {
-        super(wrapper, x, y, width, height, colour, isAlive);
+    public DefaultEnemy(EnemyWrapper wrapper, int x, int y, int width, int height, Color colour, boolean alive) {
+        super(wrapper, x, y, width, height, colour, alive);
     }
 
     public void collide(Block block) {

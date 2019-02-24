@@ -11,8 +11,8 @@ public class DefaultPlayer extends Player {
         super();
     }
 
-    public DefaultPlayer(PlayerWrapper wrapper, int x, int y, int width, int height, Color colour, int score, int lifeCount, boolean isAlive) {
-        super(wrapper, x, y, width, height, colour, score, lifeCount, isAlive);
+    public DefaultPlayer(PlayerWrapper wrapper, int x, int y, int width, int height, Color colour, boolean alive, int score, int lifeCount) {
+        super(wrapper, x, y, width, height, colour, alive, score, lifeCount);
     }
 
     public DefaultPlayer(DefaultPlayer player) {
@@ -25,6 +25,6 @@ public class DefaultPlayer extends Player {
 
     public void collide(Enemy enemy) {
         setLifeCount(getLifeCount() - 1);
-        setIsAlive(false);
+        setAlive(false);
     }
 }

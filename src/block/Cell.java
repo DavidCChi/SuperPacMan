@@ -7,26 +7,26 @@ import java.awt.*;
 
 public class Cell extends Block {
 
-    private boolean isEaten;
+    private boolean eaten;
 
     public Cell() {
         super();
-        isEaten = false;
+        eaten = false;
     }
 
-    public Cell(int x, int y, int width, int height, boolean isEaten) {
-        super(x, y, width,  height, isEaten ? Color.BLACK : Color.WHITE);
+    public Cell(int x, int y, int width, int height, boolean eaten) {
+        super(x, y, width,  height, eaten ? Color.BLACK : Color.WHITE);
     }
 
     /* accessors */
-    public boolean getIsEaten() {
-        return isEaten;
+    public boolean isEaten() {
+        return eaten;
     }
 
     /* mutators */
-    public void setIsEaten(boolean isEaten, Color colour) {
-        this.isEaten = isEaten;
-        if (isEaten) {
+    public void setEaten(boolean eaten, Color colour) {
+        this.eaten = eaten;
+        if (eaten) {
             setColour(Color.BLACK);
         } else {
             setColour(colour);
@@ -34,8 +34,8 @@ public class Cell extends Block {
     }
 
     public void collide(DefaultPlayer player) {
-        if (!isEaten) {
-            setIsEaten(true, Color.WHITE);
+        if (!eaten) {
+            setEaten(true, Color.WHITE);
             player.incrementScore(1);
         }
         player.setDirection(player.getNextDirection());

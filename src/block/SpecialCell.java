@@ -16,15 +16,15 @@ public class SpecialCell extends Cell {
         power = 0;
     }
 
-    public SpecialCell(int x, int y, int width, int height, boolean isEaten, int power) {
-        super(x, y, width, height, isEaten);
+    public SpecialCell(int x, int y, int width, int height, boolean eaten, int power) {
+        super(x, y, width, height, eaten);
         this.setColour(powerColour[power]);
         this.power = power;
     }
 
     public void collide(DefaultPlayer player) {
-        if (!getIsEaten()) {
-            setIsEaten(true, powerColour[power]);
+        if (!isEaten()) {
+            setEaten(true, powerColour[power]);
             player.incrementScore(999);
         }
         player.setDirection(player.getNextDirection());
@@ -33,7 +33,7 @@ public class SpecialCell extends Cell {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                setIsEaten(false, powerColour[power]);
+                setEaten(false, powerColour[power]);
             }
         }, 3000);
     }

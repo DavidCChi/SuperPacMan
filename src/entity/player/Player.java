@@ -11,7 +11,6 @@ public abstract class Player extends Entity {
     private PlayerWrapper wrapper;
     private int score;
     private int lifeCount;
-    private boolean isAlive;
 
     private boolean respawning;
 
@@ -20,15 +19,13 @@ public abstract class Player extends Entity {
         wrapper = null;
         score = 0;
         lifeCount = 3;
-        isAlive = true;
     }
 
-    public Player(PlayerWrapper wrapper, int x, int y, int width, int height, Color colour, int score, int lifeCount, boolean isAlive) {
-        super(x, y, width, height, colour);
+    public Player(PlayerWrapper wrapper, int x, int y, int width, int height, Color colour, boolean alive, int score, int lifeCount) {
+        super(x, y, width, height, colour, alive);
         this.wrapper = wrapper;
         this.score = score;
         this.lifeCount = lifeCount;
-        this.isAlive = isAlive;
     }
 
     public Player(Player player) {
@@ -39,10 +36,10 @@ public abstract class Player extends Entity {
         setYVel(player.getYVel());
         setDirection(player.getDirection());
         setNextDirection(player.getNextDirection());
+        setAlive(player.isAlive());
         this.wrapper = player.getWrapper();
         setScore(player.getScore());
         setLifeCount(player.getLifeCount());
-        setIsAlive(player.getIsAlive());
     }
 
     /* accessors */
@@ -55,10 +52,6 @@ public abstract class Player extends Entity {
 
     public int getLifeCount() { return lifeCount; }
 
-    public boolean getIsAlive() {
-        return isAlive;
-    }
-
     /* mutators */
 
     public void setScore(int score) {
@@ -67,15 +60,6 @@ public abstract class Player extends Entity {
 
     public void setLifeCount(int lifeCount) {
         this.lifeCount = lifeCount;
-    }
-
-    public void setIsAlive(boolean isAlive) {
-        this.isAlive = isAlive;
-        if (!isAlive) {
-            setColour(Color.BLACK);
-        } else {
-            setColour(getDefaultColour());
-        }
     }
 
     /* other methods */
@@ -92,7 +76,7 @@ public abstract class Player extends Entity {
                 public void run() {
                     setLocation(x, y);
                     setNextDirection(Entity.STOP);
-                    setIsAlive(true);
+                    setAlive(true);
                     respawning = false;
                 }
             }, 3000);

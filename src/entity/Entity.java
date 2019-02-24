@@ -18,6 +18,7 @@ public abstract class Entity extends Rectangle implements BlockVisitable {
     private int yVel;
     private int direction;
     private int nextDirection;
+    private boolean alive;
 
     // Blocks surrounding this Entity
     // 0 = TOP
@@ -34,10 +35,11 @@ public abstract class Entity extends Rectangle implements BlockVisitable {
         yVel = 0;
         direction = 0;
         nextDirection = STOP;
+        alive = false;
         surroundBlocks = new Block[4];
     }
 
-    public Entity(int x, int y, int width, int height, Color colour) {
+    public Entity(int x, int y, int width, int height, Color colour, boolean alive) {
         super(x, y, width, height);
         this.colour = colour;
         defaultColour = colour;
@@ -45,6 +47,7 @@ public abstract class Entity extends Rectangle implements BlockVisitable {
         yVel = 0;
         direction = 0;
         nextDirection = STOP;
+        this.alive = alive;
         surroundBlocks = new Block[4];
     }
 
@@ -72,6 +75,10 @@ public abstract class Entity extends Rectangle implements BlockVisitable {
 
     public int getNextDirection() {
         return nextDirection;
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 
     public Block getSurroundBlocks(int x) {
@@ -115,6 +122,15 @@ public abstract class Entity extends Rectangle implements BlockVisitable {
         if (nextDirection == STOP) {
             setXVel(0);
             setYVel(0);
+        }
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+        if (!alive) {
+            setColour(Color.BLACK);
+        } else {
+            setColour(getDefaultColour());
         }
     }
 
