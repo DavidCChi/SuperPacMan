@@ -15,7 +15,7 @@ public class DefaultPlayer extends Player {
         super(wrapper, x, y, width, height, colour, alive, score, lifeCount);
     }
 
-    public DefaultPlayer(DefaultPlayer player) {
+    public DefaultPlayer(Player player) {
         super(player);
     }
 

@@ -1,6 +1,7 @@
 package block;
 
 import entity.player.DefaultPlayer;
+import entity.player.SuperPlayer;
 import entity.enemy.DefaultEnemy;
 
 import java.awt.Rectangle;
@@ -8,6 +9,8 @@ import java.awt.Color;
 
 interface EntityVisitor {
     void collide(DefaultPlayer player);
+    void collide(SuperPlayer player);
+
     void collide(DefaultEnemy enemy);
 }
 

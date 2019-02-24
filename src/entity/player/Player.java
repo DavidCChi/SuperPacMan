@@ -40,6 +40,11 @@ public abstract class Player extends Entity {
         this.wrapper = player.getWrapper();
         setScore(player.getScore());
         setLifeCount(player.getLifeCount());
+        setSurroundBlocks(0, player.getSurroundBlocks(0));
+        setSurroundBlocks(1, player.getSurroundBlocks(1));
+        setSurroundBlocks(2, player.getSurroundBlocks(2));
+        setSurroundBlocks(3, player.getSurroundBlocks(3));
+
     }
 
     /* accessors */

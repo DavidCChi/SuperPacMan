@@ -2,6 +2,7 @@ package block;
 
 import entity.enemy.DefaultEnemy;
 import entity.player.DefaultPlayer;
+import entity.player.SuperPlayer;
 
 import java.awt.*;
 
@@ -34,6 +35,14 @@ public class Cell extends Block {
     }
 
     public void collide(DefaultPlayer player) {
+        if (!eaten) {
+            setEaten(true, Color.WHITE);
+            player.incrementScore(1);
+        }
+        player.setDirection(player.getNextDirection());
+    }
+
+    public void collide(SuperPlayer player) {
         if (!eaten) {
             setEaten(true, Color.WHITE);
             player.incrementScore(1);

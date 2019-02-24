@@ -61,7 +61,7 @@ public class Screen extends JPanel {
         grid[10][10] = new Wall(200, 200, DIM, DIM);
         grid[11][10] = new Wall(200, 220, DIM, DIM);
         grid[12][10] = new Wall(200, 240, DIM, DIM);
-        grid[5][5] = new SpecialCell(110, 110, 5, 5, false, 0);
+        grid[5][5] = new SpecialCell(110, 110, 5, 5, false, 1);
         updateSurroundingBlocks(playerWrapper.getPlayer());
         for (EnemyWrapper wrapper : enemyWrappers) {
             updateSurroundingBlocks(wrapper.getEnemy());
@@ -91,13 +91,14 @@ public class Screen extends JPanel {
                 updateSurroundingBlocks(playerWrapper.getPlayer());
                 int direction = playerWrapper.getNextDirection();
                 Block block = playerWrapper.getSurroundBlocks(direction);
+                //System.out.println(block.getClass());
                 playerWrapper.collide(block);
             } else {
                 if (playerWrapper.getNextDirection() % 2 == playerWrapper.getDirection() % 2) {
                     playerWrapper.setDirection(playerWrapper.getNextDirection());
                 }
             }
-            System.out.println(playerWrapper.getX() + " " + playerWrapper.getY() + " " + playerWrapper.getDirection() + " " + playerWrapper.getScore());
+            //System.out.println(playerWrapper.getX() + " " + playerWrapper.getY() + " " + playerWrapper.getDirection() + " " + playerWrapper.getScore());
             playerWrapper.updatePosition();
         } else {
             if (!playerWrapper.respawn(20, 20)) {
