@@ -26,5 +26,8 @@ public class DefaultPlayer extends Player {
     public void collide(Enemy enemy) {
         setLifeCount(getLifeCount() - 1);
         setAlive(false);
+        if (getLifeCount() > 0) {
+            respawn(20, 20);
+        }
     }
 }

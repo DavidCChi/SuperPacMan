@@ -3,6 +3,8 @@ package entity;
 import block.Block;
 
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public abstract class Entity extends Rectangle implements BlockVisitable {
 
@@ -166,5 +168,21 @@ public abstract class Entity extends Rectangle implements BlockVisitable {
     public void moveRight() {
         xVel = 1;
         yVel = 0;
+    }
+
+    public void respawn(int x, int y) {
+        // sets width = 0 and height = 0 to prevent further collisions when waiting for respawn
+        int width = (int) getWidth();
+        int height = (int) getHeight();
+        setSize(0, 0);
+        Timer timer = new Timer("Respawn");
+        timer.schedule(new TimerTask() {
+            public void run() {
+                setLocation(x, y);
+                setSize(width, height);
+                setNextDirection(Entity.STOP);
+                setAlive(true);
+            }
+        }, 3000);
     }
 }

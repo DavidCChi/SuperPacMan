@@ -100,24 +100,28 @@ public class Screen extends JPanel {
             }
             //System.out.println(playerWrapper.getX() + " " + playerWrapper.getY() + " " + playerWrapper.getDirection() + " " + playerWrapper.getScore());
             playerWrapper.updatePosition();
-        } else {
-            if (!playerWrapper.respawn(20, 20)) {
-                System.out.println("Game Over");
-            }
+        } else if (playerWrapper.getLifeCount() == 0){
+            System.out.println("Game Over");
         }
     }
 
     public void updateEnemies() {
         for (EnemyWrapper wrapper : enemyWrappers) {
-            if (wrapper.getNextDirection() == Entity.STOP) wrapper.setNextDirection(ThreadLocalRandom.current().nextInt(0, 4));;
-            if (((wrapper.getX() % DIM) == 0) && ((wrapper.getY() % DIM) == 0)) {
-                // check if next move is valid when the player is at an intersection
-                updateSurroundingBlocks(wrapper.getEnemy());
-                int direction = wrapper.getNextDirection();
-                Block block = wrapper.getSurroundBlocks(direction);
-                wrapper.collide(block);
+            if (wrapper.isAlive()) {
+                //System.out.println("Before: " + wrapper.getX() + ", " + wrapper.getY() + " " + wrapper.getNextDirection());
+                if (wrapper.getNextDirection() == Entity.STOP) {
+                    wrapper.setNextDirection(ThreadLocalRandom.current().nextInt(0, 4));
+                }
+                if (((wrapper.getX() % DIM) == 0) && ((wrapper.getY() % DIM) == 0)) {
+                    // check if next move is valid when the player is at an intersection
+                    updateSurroundingBlocks(wrapper.getEnemy());
+                    int direction = wrapper.getNextDirection();
+                    Block block = wrapper.getSurroundBlocks(direction);
+                    wrapper.collide(block);
+                }
+                wrapper.updatePosition();
             }
-            wrapper.updatePosition();
+            //System.out.println("After: " + wrapper.getX() + ", " + wrapper.getY() + " " + wrapper.getNextDirection());
         }
     }
 

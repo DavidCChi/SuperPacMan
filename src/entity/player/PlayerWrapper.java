@@ -80,6 +80,8 @@ public class PlayerWrapper implements BlockVisitable {
 
     public void moveRight() { player.moveRight(); }
 
+    public void respawn(int x, int y) { player.respawn(x, y); }
+
     /* from Player */
     public int getScore() { return player.getScore(); }
 
@@ -90,8 +92,6 @@ public class PlayerWrapper implements BlockVisitable {
     public void setLifeCount(int lifeCount) { player.setLifeCount(lifeCount); }
 
     public void incrementScore(int increment) { player.incrementScore(increment); }
-
-    public boolean respawn(int x, int y) { return player.respawn(x, y); }
 
     /* from BlockVisitable */
     public void collide(Block block) { player.collide(block); }

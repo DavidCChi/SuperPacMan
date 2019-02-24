@@ -36,15 +36,15 @@ public class SpecialCell extends Cell {
                     break;
             }
             setEaten(true, powerColour[power]);
+            Timer timer = new Timer("Respawn");
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    power = ThreadLocalRandom.current().nextInt(0, powerColour.length);
+                    setEaten(false, powerColour[power]);
+                }
+            }, 3000);
         }
-        Timer timer = new Timer("Respawn");
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                power = ThreadLocalRandom.current().nextInt(0, powerColour.length);
-                setEaten(false, powerColour[power]);
-            }
-        }, 3000);
     }
 
     public void collide(SuperPlayer player) {
@@ -59,15 +59,15 @@ public class SpecialCell extends Cell {
                     break;
             }
             setEaten(true, powerColour[power]);
+            Timer timer = new Timer("Respawn");
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    power = ThreadLocalRandom.current().nextInt(0, powerColour.length);
+                    setEaten(false, powerColour[power]);
+                }
+            }, 3000);
         }
-        Timer timer = new Timer("Respawn");
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                power = ThreadLocalRandom.current().nextInt(0, powerColour.length);
-                setEaten(false, powerColour[power]);
-            }
-        }, 3000);
     }
 
     public void collide(DefaultEnemy enemy) {
